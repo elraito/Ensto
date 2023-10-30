@@ -1,10 +1,8 @@
-namespace Ensto.YoloParser;
-
-using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
+using Color = SixLabors.ImageSharp.Color;
+using RectangleF = SixLabors.ImageSharp.RectangleF;
 
+namespace Ensto.YoloParser;
 class CellDimensions : DimensionsBase { }
 
 public class YoloOutputParser
@@ -161,7 +159,7 @@ public class YoloOutputParser
             {
                 for (int box = 0; box < BOXES_PER_CELL; box++)
                 {
-                    var channel = (box * (CLASS_COUNT + BOX_INFO_FEATURE_COUNT));
+                    var channel = box * (CLASS_COUNT + BOX_INFO_FEATURE_COUNT);
                     BoundingBoxDimensions boundingBoxDimensions = ExtractBoundingBoxDimensions(yoloModelOutputs, row, column, channel);
                     float confidence = GetConfidence(yoloModelOutputs, row, column, channel);
                     CellDimensions mappedBoundingBox = MapBoundingBoxToCell(row, column, box, boundingBoxDimensions);
@@ -179,8 +177,8 @@ public class YoloOutputParser
                     {
                         Dimensions = new BoundingBoxDimensions
                         {
-                            X = (mappedBoundingBox.X - mappedBoundingBox.Width / 2),
-                            Y = (mappedBoundingBox.Y - mappedBoundingBox.Height / 2),
+                            X = mappedBoundingBox.X - mappedBoundingBox.Width / 2,
+                            Y = mappedBoundingBox.Y - mappedBoundingBox.Height / 2,
                             Width = mappedBoundingBox.Width,
                             Height = mappedBoundingBox.Height,
                         },

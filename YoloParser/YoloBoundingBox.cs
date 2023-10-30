@@ -1,7 +1,6 @@
+using Color = SixLabors.ImageSharp.Color;
+
 namespace Ensto.YoloParser;
-
-using System.Drawing;
-
 public class BoundingBoxDimensions : DimensionsBase { }
 
 public class YoloBoundingBox
