@@ -13,7 +13,7 @@ public class YoloOutputParser
     public const int CHANNEL_COUNT = 125;
     public const int BOXES_PER_CELL = 5;
     public const int BOX_INFO_FEATURE_COUNT = 5;
-    public const int CLASS_COUNT = 20;
+    public const int CLASS_COUNT = 1;
     public const float CELL_WIDTH = 32;
     public const float CELL_HEIGHT = 32;
 
@@ -26,35 +26,13 @@ public class YoloOutputParser
 
     private string[] labels = new string[]
     {
-    "aeroplane", "bicycle", "bird", "boat", "bottle",
-    "bus", "car", "cat", "chair", "cow",
-    "diningtable", "dog", "horse", "motorbike", "person",
-    "pottedplant", "sheep", "sofa", "train", "tvmonitor"
+    "ümar"
     };
 
     private static Color[] classColors = new Color[]
     {
-    Color.Khaki,
-    Color.Fuchsia,
-    Color.Silver,
-    Color.RoyalBlue,
     Color.Green,
-    Color.DarkOrange,
-    Color.Purple,
-    Color.Gold,
     Color.Red,
-    Color.Aquamarine,
-    Color.Lime,
-    Color.AliceBlue,
-    Color.Sienna,
-    Color.Orchid,
-    Color.Tan,
-    Color.LightPink,
-    Color.Yellow,
-    Color.HotPink,
-    Color.OliveDrab,
-    Color.SandyBrown,
-    Color.DarkTurquoise
     };
 
     private float Sigmoid(float value)

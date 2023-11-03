@@ -8,6 +8,7 @@ using Point = SixLabors.ImageSharp.Point;
 using RectangleF = SixLabors.ImageSharp.RectangleF;
 using Color = SixLabors.ImageSharp.Color;
 using SixLabors.ImageSharp.Drawing;
+using System.Text.Json;
 
 var assetsRelativePath = @"../../../assets";
 string assetsPath = GetAbsolutePath(assetsRelativePath);
@@ -16,7 +17,7 @@ var modelFilePath = System.IO.Path.Combine(assetsPath, "Model", "model.onnx");
 var imagesFolder = System.IO.Path.Combine(assetsPath, "images");
 var outputFolder = System.IO.Path.Combine(assetsPath, "images", "output");
 
-MLContext mlContext = new MLContext();
+MLContext mlContext = new();
 
 try
 {
@@ -28,7 +29,7 @@ try
 
     IEnumerable<float[]> probabilities = modelScorer.Score(imageDataView);
 
-    YoloOutputParser parser = new YoloOutputParser();
+    YoloOutputParser parser = new();
 
     var boundingBoxes =
         probabilities
@@ -63,8 +64,8 @@ app.MapGet("/", () => "Ok!");
 
 string GetAbsolutePath(string relativePath)
 {
-    FileInfo _dataRoot = new FileInfo(typeof(Program).Assembly.Location);
-    string assemblyFolderPath = _dataRoot.Directory.FullName;
+    FileInfo _dataRoot = new(typeof(Program).Assembly.Location);
+    string assemblyFolderPath = _dataRoot.Directory!.FullName;
     string fullPath = System.IO.Path.Combine(assemblyFolderPath, relativePath);
     return fullPath;
 }
@@ -92,7 +93,7 @@ void DrawBoundingBox(string inputImageLocation, string outputImageLocation, stri
 
         Font font = SystemFonts.CreateFont("Arial", 12, FontStyle.Bold);
         var size = TextMeasurer.MeasureSize(text, new TextOptions(font));
-        Point atPoint = new Point((int)x, (int)y - (int)size.Height - 1);
+        Point atPoint = new((int)x, (int)y - (int)size.Height - 1);
 
         var pen = Pens.Solid(box.BoxColor, 3.2f);
         var brush = new SolidBrush(box.BoxColor);
@@ -119,7 +120,8 @@ void LogDetectedObjects(string imageName, IList<YoloBoundingBox> boundingBoxes)
 
     foreach (var box in boundingBoxes)
     {
-        Console.WriteLine($"Tag: {box.Label} Confidence score: {box.Confidence}");
+        // Console.WriteLine(JsonSerializer.Serialize(box));
+        Console.WriteLine($"Tag: {box.Label} Confidence score: {box.Confidence}, Height: {box.Rect.Height} Width: {box.Rect.Width}");
     }
 
     Console.WriteLine("");

@@ -4,6 +4,6 @@ using Microsoft.ML.Data;
 
 public class ImageNetPrediction
 {
-    [ColumnName("grid")]
+    [ColumnName("model_outputs0")]
     public float[] PredictedLabels;
 }
